@@ -1,0 +1,49 @@
+<div class="card ">
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-2">Filter by:</div>
+        <div class="col-md-4">
+            <input type="text" 
+            [(ngModel)] = 'listFilter' />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Filtered by: {{listFilter}}</h4>
+        </div>
+    </div>
+
+<table *ngIf = 'peoples && peoples.length'>
+        <thead>
+                <th><button (click)='toggleIma()'>
+                        {{showIma ? 'Hide' : 'Show'}} ID
+                </button></th>
+            <th>Id Code</th>
+            <th>Name</th>
+            <th>Job</th>
+            <th>Company</th>
+            <th>Salario</th>
+            <th>Desempeño</th>
+            </thead>
+    <tr *ngFor = 'let people of filteredPeople'>
+          
+    <td><img *ngIf = 'showIma'
+        [src]='people.ima'
+        [style.width.px]='imaWidth'
+        [style.margin.px]='imaMargin'></td>
+        <td>{{people.numId | lowercase | convertToSpaces: '-' }}</td>
+<td>
+    <a [routerLink] = "['/peoples', people.id]">
+    {{people.name}}
+    </a>
+</td>
+<td>{{people.job}}</td>
+<td>{{people.company}}</td>
+<td>{{people.sal | currency:'USD':'symbol':'1.2-2'}}</td>
+<td><pm-star
+    [rating] = 'people.starRating'
+    (ratingClicked) = "onRatingClicked($event)">
+    </pm-star>
+</td>
+</tr>
+</table>
